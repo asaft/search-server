@@ -1,4 +1,5 @@
 export type Street = {
+    id:number;
     mainName:string,
     title?:string,
     secondaryName?:string,

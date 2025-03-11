@@ -1,16 +1,20 @@
 import express from 'express';
 import { IElasticSearchService } from '../interfaces/ielasticesearch';
+import { StreetService } from '../services/street.service';
  export class StreetsController{
     /**
      *
      */
-    constructor(private service:IElasticSearchService) {
+    constructor(private service:StreetService) {
         
         
     }
 
+    async getById(req: express.Request, res: express.Response){
+      this.service.getById()
+    }
     async get(req: express.Request, res: express.Response){
-        const client = this.service.getClient()
+     //   const client = this.service.getClient()
       //      await client.index({
       //   index: 'my_index',
       //   id: 'my_document_id2',

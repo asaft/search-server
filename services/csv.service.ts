@@ -20,8 +20,9 @@ export class CsvService {
     }, async (error, result: any[]) => {
       const elastic:IElasticSearchService = new ElasticsearchService()
       const service = new StreetService(elastic);
+      result.shift();
       for(let i =0;i < result.length;i++){
-        result[i].id = i + 1
+        result[i].id = i +1;
           //await service.insert(result[i])
       }
       

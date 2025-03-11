@@ -4,11 +4,14 @@ const fs = require('fs');
 
 export class ElasticsearchService implements IElasticSearchService{
    client = this.getClient()
-    async insert (item:any){
-      await this.client.index({
-        index: 'streets',
-        body: item
-      })
+    async insert (item:any,id:string,index:string = "streets"){
+     
+          await this.client.index({
+              index,
+              id: id,
+              document:item,
+            })
+     
 
     }
     getClient ():Client {

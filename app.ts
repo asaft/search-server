@@ -27,12 +27,24 @@ app.listen(port, () => {
 function initApp(){
   const csvService:CsvService = new CsvService()
   const res:any = csvService.foo()
-  res.then((reults)=>{
-    debugger
+  res.then((results:any[])=>{
+   const streets:Street[] = []
+   results.forEach(record =>{
+    const obj = StreetUtil.convertCsvRecordToStreetType(record);
+    streets.push(obj)
+   })
+   const elastic:IElasticSearchService  = new ElasticsearchService()
+   const streetService:StreetService = new StreetService(elastic)
+   streetService.bulkInsert(streets)
   })
 }
 
 import { getClient } from "./database/client";
+import { Street } from "./types/streets.type";
+import { StreetUtil } from "./utils/street.util";
+import { StreetService } from "./services/street.service";
+import { ElasticsearchService } from "./services/elasticsearch.service";
+import { IElasticSearchService } from "./interfaces/ielasticesearch";
 
 
 
