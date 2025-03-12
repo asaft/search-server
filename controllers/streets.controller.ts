@@ -56,7 +56,7 @@ import { Street } from '../types/streets.type';
     async delete(req: express.Request, res: express.Response){
         const id = req.params.id;
         const item = await this.service.getById(id)
-        this.service.delete(item)
+        this.service.delete(item._source)
     }
 
 }
