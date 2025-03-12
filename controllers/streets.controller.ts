@@ -7,22 +7,34 @@ import { Street } from '../types/streets.type';
     /**
      *
      */
+    
     constructor(private service:StreetService) {
         
         
     }
-
+    
     async getById(req: express.Request, res: express.Response){
       const id = req.params.id
       const result = await this.service.getById(id);
      
       res.send(result._source)
     }
+   
     async getByQuery(req: express.Request, res: express.Response){
-      const results = await this.service.searchByField('neighborhood','ב')
+      const {value,searchType} = req.query;
+      const results = await this.service.searchAllFields(value as string,+searchType)
       const streets = StreetUtil.convertQueryResults(results)
       res.send(streets)
     }
+
+    async getByMainName(req: express.Request, res: express.Response){
+      const {value} = req.query;
+      const results = await this.service.searchByMainNameField(value as string)
+    
+      const streets = StreetUtil.convertQueryResults(results)
+      res.send(streets)
+    }
+
     async get(req: express.Request, res: express.Response){
      //   const client = this.service.getClient()
       //      await client.index({
@@ -56,7 +68,9 @@ import { Street } from '../types/streets.type';
     async delete(req: express.Request, res: express.Response){
         const id = req.params.id;
         const item = await this.service.getById(id)
-        this.service.delete(item._source)
+        const result = await this.service.delete(item._source);
+        res.send({result:true})
+       
     }
 
 }

@@ -8,12 +8,14 @@ import { StreetUtil } from "./utils/street.util";
 import { StreetService } from "./services/street.service";
 import { ElasticsearchService } from "./services/elasticsearch.service";
 import { IElasticSearchService } from "./interfaces/ielasticesearch";
+import cors  from 'cors'
 
 import streetsRoutes from './routes/streets.routes';
 
 
 const app = express();
-const port = 3000;
+app.use(cors())
+const port = 1000;
 
 global.rootPath = __dirname;
 
