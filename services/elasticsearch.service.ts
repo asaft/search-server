@@ -14,6 +14,8 @@ export class ElasticsearchService implements IElasticSearchService{
      
 
     }
+    
+    
     getClient ():Client {
         const client = new Client({
             node: 'http://localhost:9200', // Replace with your Elasticsearch node URL

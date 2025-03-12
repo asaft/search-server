@@ -3,6 +3,11 @@ import * as path from "path";
 import { parse } from 'csv-parse';
 import express from 'express';
 import { CsvService } from "./services/csv.service";
+import { Street } from "./types/streets.type";
+import { StreetUtil } from "./utils/street.util";
+import { StreetService } from "./services/street.service";
+import { ElasticsearchService } from "./services/elasticsearch.service";
+import { IElasticSearchService } from "./interfaces/ielasticesearch";
 
 import streetsRoutes from './routes/streets.routes';
 
@@ -39,12 +44,8 @@ function initApp(){
   })
 }
 
-import { getClient } from "./database/client";
-import { Street } from "./types/streets.type";
-import { StreetUtil } from "./utils/street.util";
-import { StreetService } from "./services/street.service";
-import { ElasticsearchService } from "./services/elasticsearch.service";
-import { IElasticSearchService } from "./interfaces/ielasticesearch";
+
+
 
 
 

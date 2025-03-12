@@ -1,5 +1,6 @@
 
 
+import { default as Client } from "@elastic/elasticsearch";
 import { IElasticSearchService } from "../interfaces/ielasticesearch";
 import { Street } from "../types/streets.type";
 
@@ -12,12 +13,13 @@ export class StreetService {
       
         
     }
-    async getById(){
+    async getById(id){
         const client = this.elasticService.getClient()
-        const res2 =  await client.get({
+        const res =  await client.get({
         index:this.index,
-        id: '1',
+        id: id.toString()
       })
+      return res._source
     }
     async insert(item:Street){
         item.isActive = true;
@@ -25,27 +27,49 @@ export class StreetService {
     }
     async bulkInsert(items:Street[]){
         for(let i = 0; i < items.length; i++){
-            await this.insert(items[0])
+            await this.insert(items[i])
         }
     }
-    async foo(field:string,term:string){
+    async searchByField(field:string,term:string){
        const client =  this.elasticService.getClient();
-       const obj = {field,term}
+       let obj:any = {};
+        obj[field] = term;
         const res3 = await client.search({
+            "from" : 0, "size" : 6,
+           index:this.index,
               query: {
                 match: obj
               }
             })
+            return res3.hits.hits as any[];
     }
     async searchByAllFields(term:string){
         const client =  this.elasticService.getClient()
          const results = await client.search({
+            index:this.index,
              "from" : 0, "size" : 6,
                query: {
                  match: { "_all": term }
                }
              })
      }
-    delete(){}
+     async update(item:Street){
+        const client =  this.elasticService.getClient()
+        await client.update({
+          index:this.index,
+          id: item.id.toString(),
+          doc: item
+        })
+      }
+    
+  async delete(item:any){
+      item.isActive = false;
+      const client =  this.elasticService.getClient()
+      await client.update({
+        index:this.index,
+        id: item.id.toString(),
+        doc: item
+      })
+    }
 
 }

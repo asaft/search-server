@@ -20,4 +20,10 @@ export class StreetUtil {
         return  obj;
 
     }
+    static convertQueryResults(results:any[]):Street[]{
+        
+        
+        return  results.map((r:any) => r._source);
+
+    }
 }

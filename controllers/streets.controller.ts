@@ -1,6 +1,8 @@
 import express from 'express';
 import { IElasticSearchService } from '../interfaces/ielasticesearch';
 import { StreetService } from '../services/street.service';
+import { StreetUtil } from '../utils/street.util';
+import { Street } from '../types/streets.type';
  export class StreetsController{
     /**
      *
@@ -11,7 +13,15 @@ import { StreetService } from '../services/street.service';
     }
 
     async getById(req: express.Request, res: express.Response){
-      this.service.getById()
+      const id = req.params.id
+      const result = await this.service.getById(id);
+     
+      res.send(result._source)
+    }
+    async getByQuery(req: express.Request, res: express.Response){
+      const results = await this.service.searchByField('neighborhood','ב')
+      const streets = StreetUtil.convertQueryResults(results)
+      res.send(streets)
     }
     async get(req: express.Request, res: express.Response){
      //   const client = this.service.getClient()
@@ -39,11 +49,14 @@ import { StreetService } from '../services/street.service';
     post(){
 
     }
-    put(){
-
+    put(req: express.Request, res: express.Response){
+     const street =  req.body as Street
+      this.service.update(street)
     }
-    delete(){
-        
+    async delete(req: express.Request, res: express.Response){
+        const id = req.params.id;
+        const item = await this.service.getById(id)
+        this.service.delete(item)
     }
 
 }

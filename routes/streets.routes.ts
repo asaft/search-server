@@ -10,7 +10,8 @@ const service:IElasticSearchService = new ElasticsearchService()
 const streetsService:StreetService = new StreetService(service)
 const streetsController = new StreetsController(streetsService);
 
-router.get('/getById', streetsController.getById.bind(streetsController));
+router.get('/getByQuery', streetsController.getByQuery.bind(streetsController));
+router.get('/getById/:id', streetsController.getById.bind(streetsController));
 router.get('/', streetsController.get.bind(streetsController));
 router.post('/', streetsController.post);
 
