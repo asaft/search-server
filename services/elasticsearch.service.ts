@@ -23,11 +23,7 @@ export class ElasticsearchService implements IElasticSearchService{
             auth: {
               username: 'elastic', // Replace with your Elasticsearch username
               password: 'asafme14', // Replace with your Elasticsearch password
-            }, tls: {
-              ca: fs.readFileSync(__dirname+ '/ca.crt'),
-              // For development purposes only; not recommended for production
-              rejectUnauthorized: false,
-            },
+            }
             
           })
           return client;

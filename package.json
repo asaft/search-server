@@ -6,12 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "dev": "ts-node app.ts"
+    "dev": "ts-node app.ts",
+    "build": "tsc",
+    "prestart": "copyfiles -u 1 './files/*.csv' './dist/files'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "typescript": "^5.8.2"
   },
