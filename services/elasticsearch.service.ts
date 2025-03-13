@@ -22,7 +22,7 @@ export class ElasticsearchService implements IElasticSearchService{
           
             auth: {
               username: 'elastic', // Replace with your Elasticsearch username
-              password: 'asafme14', // Replace with your Elasticsearch password
+              password: 'your password', // Replace with your Elasticsearch password
             }
             
           })
